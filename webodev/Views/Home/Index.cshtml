@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Giriş Yap</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Account" asp-action="Login" method="post">
+                        <!-- Email Adresi -->
+                        <div class="form-group mb-3">
+                            <label for="Email">Email Adresi</label>
+                            <input type="email" class="form-control" id="Email" name="Email" placeholder="Email adresinizi girin" required />
+                        </div>
+
+                        <!-- Şifre -->
+                        <div class="form-group mb-3">
+                            <label for="Password">Şifre</label>
+                            <input type="password" class="form-control" id="Password" name="Password" placeholder="Şifrenizi girin" required />
+                        </div>
+
+                        <!-- Şifremi Unuttum -->
+                        <div class="text-end mb-3">
+                            <a asp-controller="Account" asp-action="ForgotPassword" class="text-primary">Şifremi Unuttum</a>
+                        </div>
+
+                        <!-- Giriş Yap Butonu -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Giriş Yap</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <p>
+                        Hesabınız yok mu?
+                        <a asp-controller="Kullanicilar" asp-action="KullaniciKaydet" class="text-primary">Kayıt olun</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
