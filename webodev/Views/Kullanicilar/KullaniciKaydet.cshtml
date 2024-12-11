@@ -10,8 +10,9 @@
 <h2>Kayıt Ol</h2>
 <form asp-action="KullaniciKaydet" asp-controller="Kullanicilar" method="post" id="registerForm">
     <div class="form-group mb-3">
-        <label for="FirstName">Ad</label>
-        <input type="text" class="form-control" id="FirstName" name="FirstName" placeholder="Adınızı girin" required />
+        <label for="Ad">Ad</label>
+        <input type="text" class="form-control" id="Ad" name="Ad" placeholder="Adınızı girin" required />
+        <span asp-validation-for="Ad" class="text-danger"></span>
     </div>
     <div class="form-group mb-3">
         <label for="LastName">Soyad</label>
