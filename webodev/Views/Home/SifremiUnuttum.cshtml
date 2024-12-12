@@ -1,0 +1,42 @@
+﻿@model SifremiUnuttumViewModel
+
+@{
+    ViewData["Title"] = "Şifremi Unuttum";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Şifremi Unuttum</h3>
+                </div>
+                <div class="card-body">
+                    @if (TempData["Message"] != null)
+                    {
+                        <div class="alert alert-info">
+                            @TempData["Message"]
+                        </div>
+                    }
+
+                    <form asp-controller="Home" asp-action="SifremiUnuttum" method="post">
+                        <!-- Validation Summary -->
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                        <!-- Email -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Email" class="form-label">E-posta Adresi</label>
+                            <input asp-for="Email" class="form-control" placeholder="Email adresinizi girin" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Şifre Sıfırla</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

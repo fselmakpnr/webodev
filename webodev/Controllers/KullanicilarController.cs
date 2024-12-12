@@ -1,66 +1,34 @@
-﻿/*using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Runtime.CompilerServices;
 using webodev.Models;
+
 
 namespace webodev.Controllers
 {
     public class KullanicilarController : Controller
     {
-        Context a = new Context();
+        Context c = new Context();
+
         public IActionResult Index()
         {
-           var kullanicilar=a.Kullanicilars.ToList();
-            return View(kullanicilar);
-            
+            //var degerler = c.Kullanicilars.ToList();
+            // return View(degerler);
+            TempData["Message"] = "Yeni kullanıcı başarıyla eklendi!";
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult KullaniciEkle()
+        {
             return View();
         }
 
         public IActionResult KullaniciKaydet(Kullanicilar k)
         {
-            if (ModelState.IsValid)
-            {
-                a.Kullanicilars.Add(k);
-                TempData["msj"] = "Kullanıcı Kaydedildi";
-                return RedirectToAction("Login");
-            }
-            return View();
-        }
-    }
-}*/
-using Microsoft.AspNetCore.Mvc;
-using webodev.Models;
+            c.Kullanicilars.Add(k);
+            c.SaveChanges();
+            return RedirectToAction("Index");
 
-namespace webodev.Controllers
-{
-    public class KullanicilarController : Controller
-    {
-        private readonly Context _context;
-
-        public KullanicilarController()
-        {
-            _context = new Context();
-        }
-
-        [HttpGet]
-        public IActionResult KullaniciKaydet()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult KullaniciKaydet(Kullanicilar k)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Kullanicilars.Add(k);
-                _context.SaveChanges(); // Değişiklikleri veritabanına kaydet
-
-                // Başarılı işlem mesajı ve giriş ekranına yönlendirme
-                TempData["msj"] = "Kayıt başarılı! Giriş yapabilirsiniz.";
-                return RedirectToAction("Login", "Account"); // Account/Login yönlendirme
-            }
-
-            // Hata varsa aynı formu yeniden göster
-            return View(k);
         }
     }
 }

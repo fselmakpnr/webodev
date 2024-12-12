@@ -1,5 +1,15 @@
-﻿@{
+﻿@model Kullanicilar
+
+@{
     ViewData["Title"] = "Login";
+}
+
+@if (TempData["Message"] != null)
+
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
 }
 
 <div class="container mt-5">
@@ -10,22 +20,27 @@
                     <h3>Giriş Yap</h3>
                 </div>
                 <div class="card-body">
-                    <form asp-controller="Account" asp-action="Login" method="post">
+                    <form asp-controller="Home" asp-action="GirisYap" method="post">
+                        <!-- Validation Summary -->
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
                         <!-- Email Adresi -->
                         <div class="form-group mb-3">
-                            <label for="Email">Email Adresi</label>
-                            <input type="email" class="form-control" id="Email" name="Email" placeholder="Email adresinizi girin" required />
+                            <label asp-for="Email" class="form-label">Email Adresi</label>
+                            <input asp-for="Email" class="form-control" placeholder="Email adresinizi girin" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
                         <!-- Şifre -->
                         <div class="form-group mb-3">
-                            <label for="Password">Şifre</label>
-                            <input type="password" class="form-control" id="Password" name="Password" placeholder="Şifrenizi girin" required />
+                            <label asp-for="Sifre" class="form-label">Şifre</label>
+                            <input asp-for="Sifre" class="form-control" type="password" placeholder="Şifrenizi girin" />
+                            <span asp-validation-for="Sifre" class="text-danger"></span>
                         </div>
 
                         <!-- Şifremi Unuttum -->
                         <div class="text-end mb-3">
-                            <a asp-controller="Account" asp-action="ForgotPassword" class="text-primary">Şifremi Unuttum</a>
+                            <a asp-controller="Home" asp-action="SifremiUnuttum" class="text-primary">Şifremi Unuttum</a>
                         </div>
 
                         <!-- Giriş Yap Butonu -->
@@ -37,7 +52,7 @@
                 <div class="card-footer text-center">
                     <p>
                         Hesabınız yok mu?
-                        <a asp-controller="Kullanicilar" asp-action="KullaniciKaydet" class="text-primary">Kayıt olun</a>
+                        <a asp-controller="Kullanicilar" asp-action="KullaniciEkle" class="text-primary">Kayıt olun</a>
                     </p>
                 </div>
             </div>
