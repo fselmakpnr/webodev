@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using webodev.Models;
 
 namespace webodev.Controllers
@@ -21,44 +23,17 @@ namespace webodev.Controllers
         {
             return View();
         }
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult GirisYap()
         {
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult> GirisYap(Kullanicilar g)
-        {
-            if (ModelState.IsValid)
-            {
-                // Kullanýcýyý veritabanýnda ara
-                var bilgiler = b.Kullanicilars.FirstOrDefault(x => x.Email == g.Email && x.Sifre == g.Sifre);
-
-                if (bilgiler != null)
-                {
-                    // Kullanýcý bulundu, kimlik doðrulama iþlemi
-                    var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Email, g.Email)
-            };
-                    var userIdentity = new ClaimsIdentity(claims, "Index");
-                    ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
-                    //await HttpContext.SignInAsync(principal);
-
-                    return RedirectToAction("Index", "Kullanicilar");
-                }
-
-                // Kullanýcý bulunamadý, hata mesajý
-                ModelState.AddModelError("", "Email veya þifre yanlýþ. Lütfen tekrar deneyin.");
-            }
-
-            // Model valid deðil veya kullanýcý bulunamadý
-            return View(g);
-        }
         [HttpGet]
         public IActionResult SifremiUnuttum()
         {
-            return View(); // SifremiUnuttum.cshtml görünümü yüklenecek
+            // Boþ bir model ile sayfayý döndür
+            return View(new SifremiUnuttumViewModel());
         }
 
         [HttpPost]
@@ -80,7 +55,37 @@ namespace webodev.Controllers
 
             return View(model);
         }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult GirisYap(Kullanicilar g)
+        {
+            // Kullanýcýyý veritabanýnda sorgula
+            var bilgiler = b.Kullanicilars.FirstOrDefault(x => x.Email == g.Email && x.Sifre == g.Sifre);
 
+            if (bilgiler != null)
+            {
+                // Kullanýcý baþarýyla giriþ yaptýysa, kullanýcýnýn email bilgisini Session'a kaydet
+                HttpContext.Session.SetString("Email", g.Email);
+
+                // Giriþ baþarýlý ise, ana sayfaya yönlendir
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Giriþ baþarýsýzsa, giriþ sayfasýný yeniden göster
+            TempData["ErrorMessage"] = "Geçersiz email veya þifre."; // Hata mesajý göstermek için TempData
+            return View();
+        }
+        public IActionResult RandevuAl()
+        {
+            // Kullanýcý giriþ yapmamýþsa, giriþ yap sayfasýna yönlendir
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Email")))
+            {
+                return RedirectToAction("GirisYap", "Home");
+            }
+
+            // Kullanýcý giriþ yaptýysa, RandevuController'a yönlendir
+            return RedirectToAction("Index", "Randevu");
+        }
         public IActionResult Privacy()
         {
             return View();

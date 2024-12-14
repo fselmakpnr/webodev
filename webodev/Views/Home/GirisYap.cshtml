@@ -1,7 +1,63 @@
-﻿@if (!ViewData.ModelState.IsValid)
-{
-    <div class="text-danger">
-        @Html.ValidationSummary()
-    </div>
+﻿@model webodev.Models.Kullanicilar
+
+@{
+    ViewData["Title"] = "Giriş Yap";
 }
-<h1>hosgeldiniz</h1>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <!-- Başlık -->
+                <div class="card-header text-center">
+                    <h3>Giriş Yap</h3>
+                </div>
+
+                <div class="card-body">
+                    <!-- Hata Mesajı Gösterimi -->
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+
+                    <!-- Form -->
+                    <form asp-controller="Home" asp-action="GirisYap" method="post">
+                        <!-- Email Adresi -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Email" class="form-label">Email Adresi</label>
+                            <input asp-for="Email" class="form-control" name="Email" placeholder="Email adresinizi girin" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <!-- Şifre -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Sifre" class="form-label">Şifre</label>
+                            <input asp-for="Sifre" type="password" class="form-control" name="Sifre" placeholder="Şifrenizi girin" />
+                            <span asp-validation-for="Sifre" class="text-danger"></span>
+                        </div>
+
+                        <!-- Şifremi Unuttum -->
+                        <div class="text-end mb-3">
+                            <a asp-controller="Home" asp-action="SifremiUnuttum" class="text-primary">Şifremi Unuttum</a>
+                        </div>
+
+                        <!-- Giriş Yap Butonu -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Giriş Yap</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Kayıt Ol Linki -->
+                <div class="card-footer text-center">
+                    <p>
+                        Hesabınız yok mu?
+                        <a asp-controller="Kullanicilar" asp-action="KullaniciEkle" class="text-primary">Kayıt Olun</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

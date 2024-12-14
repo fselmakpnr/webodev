@@ -1,15 +1,5 @@
-﻿@model Kullanicilar
-
-@{
-    ViewData["Title"] = "Login";
-}
-
-@if (TempData["Message"] != null)
-
-{
-    <div class="alert alert-success">
-        @TempData["Message"]
-    </div>
+﻿@{
+    ViewData["Title"] = "Home Page";
 }
 
 <div class="container mt-5">
@@ -17,43 +7,14 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header text-center">
-                    <h3>Giriş Yap</h3>
+                    <h3>Hoş Geldiniz</h3>
                 </div>
                 <div class="card-body">
-                    <form asp-controller="Home" asp-action="GirisYap" method="post">
-                        <!-- Validation Summary -->
-                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
-
-                        <!-- Email Adresi -->
-                        <div class="form-group mb-3">
-                            <label asp-for="Email" class="form-label">Email Adresi</label>
-                            <input asp-for="Email" class="form-control" placeholder="Email adresinizi girin" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-
-                        <!-- Şifre -->
-                        <div class="form-group mb-3">
-                            <label asp-for="Sifre" class="form-label">Şifre</label>
-                            <input asp-for="Sifre" class="form-control" type="password" placeholder="Şifrenizi girin" />
-                            <span asp-validation-for="Sifre" class="text-danger"></span>
-                        </div>
-
-                        <!-- Şifremi Unuttum -->
-                        <div class="text-end mb-3">
-                            <a asp-controller="Home" asp-action="SifremiUnuttum" class="text-primary">Şifremi Unuttum</a>
-                        </div>
-
-                        <!-- Giriş Yap Butonu -->
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">Giriş Yap</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer text-center">
-                    <p>
-                        Hesabınız yok mu?
-                        <a asp-controller="Kullanicilar" asp-action="KullaniciEkle" class="text-primary">Kayıt olun</a>
-                    </p>
+                    <p>Randevu almak için aşağıdaki butona tıklayın.</p>
+                    <!-- Randevu Al butonu -->
+                    <div class="d-grid gap-2">
+                        <a asp-controller="Home" asp-action="RandevuAl" class="btn btn-primary">Randevu Al</a>
+                    </div>
                 </div>
             </div>
         </div>
