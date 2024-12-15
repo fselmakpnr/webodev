@@ -16,6 +16,6 @@ namespace webodev.Models
 
         public List<CalisanUzmanlik> calisanUzmanliks { get; set; }
 
-        public List<HizmetKategorisiLink> Links { get; set; }
+        
     }
 }

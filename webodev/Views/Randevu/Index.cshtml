@@ -1,0 +1,61 @@
+﻿@model List<webodev.Models.CalisanHizmetViewModel>
+
+<h1>Çalışanlar ve Hizmet Detayları</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Çalışan Adı</th>
+            <th>Çalışan Soyadı</th>
+            <th>Hizmetler</th>
+            <th>Süre (dk)</th>
+            <th>Ücret (₺)</th>
+            <th>İşlem</th> <!-- Yeni sütun buton için -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var calisan in Model)
+
+        {
+            <tr>
+                <td>@calisan.CalisanAdi</td>
+                <td>@calisan.CalisanSoyadi</td>
+                <td>
+                    <ul>
+                        @foreach (var hizmet in calisan.HizmetDetaylari)
+
+                        {
+                            <li>@hizmet.Ad</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        @foreach (var hizmet in calisan.HizmetDetaylari)
+
+                        {
+                            <li>@hizmet.Sure</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        @foreach (var hizmet in calisan.HizmetDetaylari)
+
+                        {
+                            <li>@hizmet.Ucret</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <a asp-controller="Randevu" asp-action="RandevuOlustur" class="btn btn-primary">Randevu Al</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+,

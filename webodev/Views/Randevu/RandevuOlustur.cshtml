@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Randevu Oluştur";
+}
+
+<h1>Randevu Oluştur</h1>
+
+<form action="@Url.Action("RandevuOlustur", "Randevu")" method="post">
+    <div class="form-group">
+        <label for="tarih">Tarih Seçin:</label>
+        <input type="date" class="form-control" id="tarih" name="tarih" required />
+    </div>
+
+    <div class="form-group">
+        <label for="saat">Saat Seçin:</label>
+        <select class="form-control" id="saat" name="saat" required>
+            @for (int hour = 8; hour <= 20; hour++)
+            {
+                <option value="@hour:00">@hour:00</option>
+                <option value="@hour:30">@hour:30</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Randevu Oluştur</button>
+</form>

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -86,6 +87,9 @@ namespace webodev.Controllers
             // Kullanýcý giriþ yaptýysa, RandevuController'a yönlendir
             return RedirectToAction("Index", "Randevu");
         }
+        
+        
+
         public IActionResult Privacy()
         {
             return View();

@@ -18,7 +18,6 @@ namespace webodev.Models
         public DbSet<CalisanUzmanlik> CalisanUzmanliks { get; set; }
         public DbSet<Randevular> Randevulars { get; set; }
         public DbSet<CalismaSaatleri> CalismaSaatleris { get; set; }
-        public DbSet<HizmetKategorileri> HizmetKategorileris { get; set; }
-        public DbSet<HizmetKategorisiLink> HizmetKategorisiLinks { get; set; }
+       
     }
 }
