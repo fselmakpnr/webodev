@@ -1,0 +1,41 @@
+﻿@model IEnumerable<webodev.Models.Randevular>
+
+@{
+    ViewData["Title"] = "Admin Paneli - Randevular";
+}
+
+<h1 class="mt-3">Admin Paneli - Randevu Listesi</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Randevu ID</th>
+            <th>Kullanıcı Adı</th>
+            <th>Kullanıcı Soyadı</th>
+            <th>Çalışan Adı</th>
+            <th>Çalışan Soyadı</th>
+            <th>Hizmet</th>
+            <th>Salon</th>
+            <th>Tarih</th>
+            <th>Saat</th>
+            <th>Toplam Ücret</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var randevu in Model)
+        {
+            <tr>
+                <td>@randevu.RandevularID</td>
+                <td>@(randevu.Kullanicilar?.Ad ?? "Bilinmiyor")</td>
+                <td>@(randevu.Kullanicilar?.Soyad ?? "Bilinmiyor")</td>
+                <td>@(randevu.Calisanlar?.Ad ?? "Bilinmiyor")</td>
+                <td>@(randevu.Calisanlar?.Soyad ?? "Bilinmiyor")</td>
+                <td>@(randevu.Hizmetler?.Ad ?? "Bilinmiyor")</td>
+                <td>@(randevu.Salon?.Ad ?? "Bilinmiyor")</td>
+                <td>@randevu.Tarih.ToString("yyyy-MM-dd")</td>
+                <td>@randevu.Saat</td>
+                <td>@randevu.ToplamUcret.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>

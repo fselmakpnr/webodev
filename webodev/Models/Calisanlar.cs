@@ -1,5 +1,6 @@
-﻿using webodev.Models;
-using KeyAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
+﻿using System.ComponentModel.DataAnnotations;
+using webodev.Models;
+
 namespace webodev.Models
 {
     public class Calisanlar
@@ -9,10 +10,10 @@ namespace webodev.Models
         public string Ad { get; set; }
         public string Soyad { get; set; }
         public int SalonID { get; set; }
-       
+
+
         public virtual Salon Salon { get; set; }
 
         public List<CalismaSaatleri> calismaSaatleris { get; set; }
-
     }
 }

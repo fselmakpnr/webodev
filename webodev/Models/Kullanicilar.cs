@@ -24,9 +24,6 @@ namespace webodev.Models
         [DataType(DataType.Password)]
         public string Sifre { get; set; }
 
-        [Display(Name = "Rol")]
-        public string Rol { get; set; }  // Admin veya User
-
         public List<Randevular> Randevulars { get; set; }
     }
 }

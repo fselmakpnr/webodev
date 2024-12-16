@@ -1,18 +1,19 @@
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using webodev.Models;
 
-namespace webodev.Controllers
+
+namespace webOdev3.Controllers
 {
-    
     public class HomeController : Controller
     {
-        Context b = new Context();
+
+        Context c = new Context();
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -24,44 +25,45 @@ namespace webodev.Controllers
         {
             return View();
         }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult RandevuAl()
+        {
+            // Kullanýcý giriþ yapmamýþsa, giriþ yap sayfasýna yönlendir
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Email")))
+            {
+                return RedirectToAction("GirisYap", "Home");
+            }
+
+            // Kullanýcý giriþ yaptýysa, RandevuController'a yönlendir
+            return RedirectToAction("Index", "Randevu");
+        }
+
+
         [AllowAnonymous]
         [HttpGet]
         public IActionResult GirisYap()
         {
             return View();
         }
-        [HttpGet]
-        public IActionResult SifremiUnuttum()
-        {
-            // Boþ bir model ile sayfayý döndür
-            return View(new SifremiUnuttumViewModel());
-        }
-
-        [HttpPost]
-        public IActionResult SifremiUnuttum(SifremiUnuttumViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                // Þifre sýfýrlama iþlemleri
-                var user = b.Kullanicilars.FirstOrDefault(x => x.Email == model.Email);
-                if (user != null)
-                {
-                    TempData["Message"] = "Þifre sýfýrlama baðlantýnýz e-posta adresinize gönderildi.";
-                }
-                else
-                {
-                    TempData["Message"] = "Bu e-posta adresi sistemde bulunamadý.";
-                }
-            }
-
-            return View(model);
-        }
         [AllowAnonymous]
         [HttpPost]
         public IActionResult GirisYap(Kullanicilar g)
         {
+            // Admin Giriþi Kontrolü
+            if (g.Email == "admin@sakarya.edu.tr" && g.Sifre == "sau")
+            {
+                // Admin olarak giriþ yapýldý
+                HttpContext.Session.SetString("Email", g.Email);
+                return RedirectToAction("Index", "Admin"); // Admin sayfasýna yönlendirme
+            }
+
             // Kullanýcýyý veritabanýnda sorgula
-            var bilgiler = b.Kullanicilars.FirstOrDefault(x => x.Email == g.Email && x.Sifre == g.Sifre);
+            var bilgiler = c.Kullanicilars.FirstOrDefault(x => x.Email == g.Email && x.Sifre == g.Sifre);
 
             if (bilgiler != null)
             {
@@ -76,23 +78,33 @@ namespace webodev.Controllers
             TempData["ErrorMessage"] = "Geçersiz email veya þifre."; // Hata mesajý göstermek için TempData
             return View();
         }
-        public IActionResult RandevuAl()
+
+
+        [HttpGet]
+        public IActionResult SifremiUnuttum()
         {
-            // Kullanýcý giriþ yapmamýþsa, giriþ yap sayfasýna yönlendir
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Email")))
+            // Boþ bir model ile sayfayý döndür
+            return View(new SifremiUnuttumViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult SifremiUnuttum(SifremiUnuttumViewModel model)
+        {
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("GirisYap", "Home");
+                // Þifre sýfýrlama iþlemleri
+                var user = c.Kullanicilars.FirstOrDefault(x => x.Email == model.Email);
+                if (user != null)
+                {
+                    TempData["Message"] = "Þifre sýfýrlama baðlantýnýz e-posta adresinize gönderildi.";
+                }
+                else
+                {
+                    TempData["Message"] = "Bu e-posta adresi sistemde bulunamadý.";
+                }
             }
 
-            // Kullanýcý giriþ yaptýysa, RandevuController'a yönlendir
-            return RedirectToAction("Index", "Randevu");
-        }
-        
-        
-
-        public IActionResult Privacy()
-        {
-            return View();
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

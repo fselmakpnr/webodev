@@ -1,61 +1,88 @@
 ﻿@model List<webodev.Models.CalisanHizmetViewModel>
 
-<h1>Çalışanlar ve Hizmet Detayları</h1>
+<h1>Randevu Oluştur</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Çalışan Adı</th>
-            <th>Çalışan Soyadı</th>
-            <th>Hizmetler</th>
-            <th>Süre (dk)</th>
-            <th>Ücret (₺)</th>
-            <th>İşlem</th> <!-- Yeni sütun buton için -->
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var calisan in Model)
+<form asp-controller="Randevu" asp-action="RandevuEkle" method="post">
+    <!-- Çalışan Seçimi -->
+    <div class="form-group">
+        <label for="calisanId">Çalışan Seçin:</label>
+        <select class="form-control" id="calisanId" name="calisanAdi" required>
+            <option value="">Çalışan Seçin</option>
+            @foreach (var calisan in Model)
+            {
+                <option value="@calisan.CalisanAdi @calisan.CalisanSoyadi">
+                    @calisan.CalisanAdi @calisan.CalisanSoyadi
+                </option>
+            }
+        </select>
+    </div>
 
-        {
-            <tr>
-                <td>@calisan.CalisanAdi</td>
-                <td>@calisan.CalisanSoyadi</td>
-                <td>
-                    <ul>
-                        @foreach (var hizmet in calisan.HizmetDetaylari)
+    <!-- Hizmet Seçimi -->
+    <div class="form-group">
+        <label for="hizmetId">Hizmet Seçin:</label>
+        <select class="form-control" id="hizmetId" name="hizmetAd" required>
+            <option value="">Hizmet Seçin</option>
+        </select>
+    </div>
 
-                        {
-                            <li>@hizmet.Ad</li>
-                        }
-                    </ul>
-                </td>
-                <td>
-                    <ul>
-                        @foreach (var hizmet in calisan.HizmetDetaylari)
+    <!-- Ücret Görüntüleme -->
+    <div class="form-group">
+        <label for="ucret">Ücret:</label>
+        <input type="text" class="form-control" id="ucret" name="hizmetUcret" readonly />
+    </div>
 
-                        {
-                            <li>@hizmet.Sure</li>
-                        }
-                    </ul>
-                </td>
-                <td>
-                    <ul>
-                        @foreach (var hizmet in calisan.HizmetDetaylari)
+    <!-- Tarih ve Saat Seçimi -->
+    <div class="form-group">
+        <label for="tarih">Tarih Seçin:</label>
+        <input type="date" class="form-control" id="tarih" name="tarih" required />
+    </div>
 
-                        {
-                            <li>@hizmet.Ucret</li>
-                        }
-                    </ul>
-                </td>
-                <td>
-                    <a asp-controller="Randevu" asp-action="RandevuOlustur" class="btn btn-primary">Randevu Al</a>
-                </td>
-            </tr>
+    <div class="form-group">
+        <label for="saat">Saat Seçin:</label>
+        <select class="form-control" id="saat" name="saat" required>
+            @for (int hour = 8; hour <= 20; hour++)
+            {
+                <option value="@hour:00">@hour:00</option>
+                <option value="@hour:30">@hour:30</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Randevu Oluştur</button>
+</form>
+
+<script>
+    // ViewBag'den hizmet verilerini JSON olarak alıyoruz
+    var calisanHizmetler = @Html.Raw(ViewBag.CalisanHizmetler);
+
+    // Çalışan seçildiğinde hizmetler dinamik olarak güncellenecek
+    document.getElementById('calisanId').addEventListener('change', function () {
+        var selectedEmployee = this.value.trim(); // Seçilen çalışan adı ve soyadı
+
+        // Hizmet seçeneklerini sıfırlıyoruz
+        var hizmetSelect = document.getElementById('hizmetId');
+        hizmetSelect.innerHTML = '<option value="">Hizmet Seçin</option>';
+
+        // Seçilen çalışanın hizmetlerini buluyoruz
+        var selectedCalisan = calisanHizmetler.find(function (calisan) {
+            return (calisan.CalisanAdi + " " + calisan.CalisanSoyadi).trim() === selectedEmployee;
+        });
+
+        // Eğer çalışanın hizmetleri varsa, seçeneklere ekliyoruz
+        if (selectedCalisan) {
+            selectedCalisan.HizmetDetaylari.forEach(function (hizmet) {
+                var option = document.createElement('option');
+                option.value = hizmet.Ad;
+                option.text = `${hizmet.Ad} - ${hizmet.Sure} dk - ${hizmet.Ucret} ₺`;
+                hizmetSelect.appendChild(option);
+            });
         }
-    </tbody>
-</table>
 
-
-
-
-,
+        // Ücret güncelleme
+        hizmetSelect.addEventListener('change', function () {
+            var selectedHizmet = hizmetSelect.options[hizmetSelect.selectedIndex];
+            var ucret = selectedHizmet ? selectedHizmet.text.split('-')[2].trim() : '';
+            document.getElementById('ucret').value = ucret;
+        });
+    });
+</script>
