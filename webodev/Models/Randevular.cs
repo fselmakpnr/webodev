@@ -13,7 +13,7 @@ namespace webodev.Models
         public DateTime Tarih { get; set; }
         public TimeSpan Saat { get; set; }
         public float ToplamUcret { get; set; }
-
+        public bool OnayDurumu { get; set; } = false;
         public Kullanicilar Kullanicilar { get; set; }
         public Calisanlar Calisanlar { get; set; }
         public Hizmetler Hizmetler { get; set; }

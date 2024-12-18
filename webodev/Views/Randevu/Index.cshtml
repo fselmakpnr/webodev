@@ -77,12 +77,17 @@
                 hizmetSelect.appendChild(option);
             });
         }
-
-        // Ücret güncelleme
-        hizmetSelect.addEventListener('change', function () {
-            var selectedHizmet = hizmetSelect.options[hizmetSelect.selectedIndex];
-            var ucret = selectedHizmet ? selectedHizmet.text.split('-')[2].trim() : '';
-            document.getElementById('ucret').value = ucret;
+        // Hizmet seçimi yapıldığında ücret güncellenir
+        document.getElementById('hizmetId').addEventListener('change', function () {
+            var selectedHizmet = this.options[this.selectedIndex]; // Seçilen hizmet
+            if (selectedHizmet && selectedHizmet.text.includes('-')) {
+                // Hizmet detaylarını parçalayarak ücreti ayıklıyoruz
+                var hizmetUcret = selectedHizmet.text.split('-')[2].replace('₺', '').trim(); // Ücreti temizle
+                document.getElementById('ucret').value = hizmetUcret; // Ücreti input alanına yaz
+            } else {
+                document.getElementById('ucret').value = ''; // Geçersiz seçimde temizle
+            }
         });
+
     });
 </script>

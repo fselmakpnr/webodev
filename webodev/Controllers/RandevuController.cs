@@ -100,6 +100,20 @@ namespace webOdev3.Controllers
 
             return View();
         }
+        [HttpPost]
+        public IActionResult Onayla(int id)
+        {
+            var randevu = _context.Randevulars.Find(id);
+            if (randevu == null)
+            {
+                return NotFound();
+            }
+
+            randevu.OnayDurumu = true; // Onay Durumunu Güncelle
+            _context.SaveChanges();
+
+            return RedirectToAction("Index"); // Randevu listesine geri dön
+        }
 
 
 
