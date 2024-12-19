@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using webodev.Models;
-
+using System.Security.Claims;
 
 namespace webOdev3.Controllers
 {
@@ -49,28 +49,38 @@ namespace webOdev3.Controllers
         }
 
         [HttpPost]
-        [HttpPost]
         public IActionResult RandevuEkle(string tarih, string saat, string calisanAdi, string hizmetAd, float hizmetUcret)
         {
             if (string.IsNullOrWhiteSpace(saat))
             {
-                ViewBag.Message = "Saat seçimi boş olamaz.";
-                return View();
+                TempData["Message"] = "Saat seçimi boş olamaz.";
+                return RedirectToAction("Index");
             }
 
             if (!DateTime.TryParse($"{tarih} {saat}:00", out var randevuTarihi))
             {
-                ViewBag.Message = "Geçersiz tarih veya saat formatı.";
-                return View();
+                TempData["Message"] = "Geçersiz tarih veya saat formatı.";
+                return RedirectToAction("Index");
+            }
+
+            if (randevuTarihi <= DateTime.Now)
+            {
+                TempData["Message"] = "Geçmiş bir tarihe randevu oluşturamazsınız. Lütfen ileri bir tarih seçin.";
+                return RedirectToAction("Index");
             }
 
             if (!TimeSpan.TryParse(saat, out var saatDilimi))
             {
-                ViewBag.Message = "Geçersiz saat formatı.";
-                return View();
+                TempData["Message"] = "Geçersiz saat formatı.";
+                return RedirectToAction("Index");
             }
 
-            var kullaniciId = 13; // Kullanıcı ID'sini burada alabilirsiniz.
+            var kullaniciIdString = HttpContext.Session.GetString("KullaniciId");
+            if (string.IsNullOrEmpty(kullaniciIdString) || !int.TryParse(kullaniciIdString, out int kullaniciId))
+            {
+                TempData["Message"] = "Kullanıcı kimliği bulunamadı.";
+                return RedirectToAction("Index");
+            }
 
             // Çalışan ve hizmet bilgilerini almak
             var calisan = _context.Calisanlars.FirstOrDefault(c => c.Ad + " " + c.Soyad == calisanAdi);
@@ -78,10 +88,25 @@ namespace webOdev3.Controllers
 
             if (calisan == null || hizmet == null)
             {
-                ViewBag.Message = "Çalışan veya hizmet bulunamadı.";
-                return View();
+                TempData["Message"] = "Çalışan veya hizmet bulunamadı.";
+                return RedirectToAction("Index");
             }
 
+            // Çalışan için seçilen tarih ve saat aralığında mevcut bir randevu olup olmadığını kontrol et
+            var hizmetSuresi = TimeSpan.FromMinutes(hizmet.Sure);
+            var randevuBitisSaati = saatDilimi + hizmetSuresi;
+
+            var mevcutRandevular = _context.Randevulars
+                .Where(r => r.CalisanlarID == calisan.CalisanlarID && r.Tarih.Date == randevuTarihi.Date)
+                .AsEnumerable() // LINQ-to-Objects'e geçiş
+                .Where(r => r.Saat < randevuBitisSaati && r.Saat + TimeSpan.FromMinutes(hizmet.Sure) > saatDilimi)
+                .ToList();
+
+            if (mevcutRandevular.Any())
+            {
+                TempData["Message"] = "Seçilen tarih ve saat aralığında bu çalışan zaten dolu. Lütfen başka bir zaman seçin.";
+                return RedirectToAction("Index");
+            }
             var yeniRandevu = new Randevular
             {
                 KullanicilarID = kullaniciId,
@@ -96,26 +121,9 @@ namespace webOdev3.Controllers
             _context.Randevulars.Add(yeniRandevu);
             _context.SaveChanges();
 
-            ViewBag.Message = $"Randevu başarıyla oluşturuldu! Tarih: {randevuTarihi:dd MMMM yyyy HH:mm}, Hizmet: {hizmetAd}, Ücret: {hizmetUcret} ₺";
+            TempData["Message"] = $"Randevu başarıyla oluşturuldu! Tarih: {randevuTarihi:dd MMMM yyyy HH:mm}, Hizmet: {hizmetAd}, Ücret: {hizmetUcret} ₺";
 
-            return View();
+            return RedirectToAction("Index");
         }
-        [HttpPost]
-        public IActionResult Onayla(int id)
-        {
-            var randevu = _context.Randevulars.Find(id);
-            if (randevu == null)
-            {
-                return NotFound();
-            }
-
-            randevu.OnayDurumu = true; // Onay Durumunu Güncelle
-            _context.SaveChanges();
-
-            return RedirectToAction("Index"); // Randevu listesine geri dön
-        }
-
-
-
     }
 }

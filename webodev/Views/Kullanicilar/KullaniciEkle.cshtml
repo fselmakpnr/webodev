@@ -3,7 +3,9 @@
 @{
     ViewData["Title"] = "Kayıt Ol";
 }
-
+<head>
+    <link rel="stylesheet" href="~/css/kayit.css" />
+</head>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -52,7 +54,7 @@
                 <div class="card-footer text-center">
                     <p>
                         Zaten hesabınız var mı?
-                        <a asp-controller="Home" asp-action="Index" class="text-primary">Giriş yap</a>
+                        <a asp-controller="Home" asp-action="GirisYap" class="text-primary">Giriş yap</a>
                     </p>
                 </div>
             </div>

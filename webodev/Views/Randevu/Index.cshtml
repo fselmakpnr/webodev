@@ -1,7 +1,29 @@
 ﻿@model List<webodev.Models.CalisanHizmetViewModel>
+<img src="images/calisan.png" alt="Description of image">
+<style>
+    img {
+        display: block;
+        width: 100%; 
+        max-width: 1200px; 
+        margin: 0 auto; 
+        padding-top: 75px;
+        padding-bottom: 50px;
+    }
+
+    form {
+        
+        margin-top: 20px;
+        
+    }
+</style>
 
 <h1>Randevu Oluştur</h1>
-
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["Message"]
+    </div>
+}
 <form asp-controller="Randevu" asp-action="RandevuEkle" method="post">
     <!-- Çalışan Seçimi -->
     <div class="form-group">

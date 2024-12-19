@@ -1,0 +1,136 @@
+﻿/* Genel Stil */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #dddddd !important;
+    /* Koyu gri arka plan rengi */
+    height: 100vh;
+}
+
+/* Navbar Stili */
+.navbar {
+    position: fixed; /* Sabit pozisyon */
+    top: 0;
+    width: 100%; /* Tüm genişliği kapla */
+    background-color: #333; /* Koyu arka plan */
+    color: white;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 100; /* Diğer içeriklerin üstünde tut */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        padding: 0 15px;
+        font-weight: bold;
+    }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+/* Login Container */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding-top: 70px; /* Navbar ile çakışmayı önlemek için üst boşluk */
+    box-sizing: border-box; /* Padding dahil genişlik ve yükseklik ayarı */
+}
+
+.login-card {
+    background-color: #c9b6dd;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+
+.welcome-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.logo {
+    background-color: #f0f0f0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-bottom: 2px solid #ddd;
+    background: transparent;
+    outline: none;
+    color: #333;
+}
+
+    .input-field::placeholder {
+        color: #f0f0f0;
+    }
+
+    .input-field:focus {
+        border-bottom: 2px solid #8e44ad;
+    }
+
+.login-btn {
+    background: linear-gradient(to right, #2ed4ff, #a044ff);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    padding: 10px 0;
+    width: 100%;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+    .login-btn:hover {
+        background: linear-gradient(to right, #2cb6e4, #8e3ed4);
+    }
+
+.signup-text {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+    .signup-text a {
+        color: #a044ff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        .signup-text a:hover {
+            text-decoration: underline;
+        }

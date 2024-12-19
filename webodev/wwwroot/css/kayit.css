@@ -1,0 +1,97 @@
+﻿/* Genel ayarlar */
+body {
+    background-color: #eee0e5;
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.container {
+    max-width: 1000px;
+    width: 100%;
+    margin-top: 50px;
+    padding: 20px;
+}
+
+.card {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: #bc8f8f;
+    color: #ffffff;
+    padding: 20px;
+}
+
+    .card-header h3 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+.card-body {
+    padding: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        font-weight: bold;
+        color: #333333;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+.form-control {
+    height: 45px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 16px;
+}
+
+    .form-control:focus {
+        border-color: #ff4b2b;
+        box-shadow: 0 0 4px rgba(255, 75, 43, 0.5);
+    }
+
+.btn-primary {
+    background-color: #bc8f8f;
+    border: none;
+    height: 45px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+    .btn-primary:hover {
+        background-color: #cd5555;
+    }
+
+.card-footer {
+    background-color: #f8f9fa;
+    padding: 15px;
+    text-align: center;
+    font-size: 14px;
+    color: #333333;
+}
+    .card-footer a {
+        color: #8b2323 !important;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        .card-footer a:hover {
+            text-decoration: underline;
+        }

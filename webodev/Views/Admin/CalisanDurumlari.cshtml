@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Çalışan Durumları";
+
+    var calisanKazancListesi = ViewBag.CalisanKazancListesi as IEnumerable<dynamic>;
+}
+
+<h1 class="mt-3">Çalışan Durumları</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Çalışan Adı Soyadı</th>
+            <th>Toplam Kazanç</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var calisan in calisanKazancListesi)
+
+        {
+            <tr>
+                <td>@calisan.AdSoyad</td>
+                <td>@calisan.ToplamKazanc.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>

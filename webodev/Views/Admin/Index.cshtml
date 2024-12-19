@@ -5,52 +5,63 @@
 }
 
 <h1 class="mt-3">Admin Paneli - Randevu Listesi</h1>
-d>
 
-    <table class="table table-bordered">
-        <thead>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
+
+<a asp-action="CalisanDurumlari" asp-controller="Admin" class="btn btn-primary mb-3">Çalışan Durumları</a>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Randevu ID</th>
+            <th>Kullanıcı Adı</th>
+            <th>Kullanıcı Soyadı</th>
+            <th>Çalışan Adı</th>
+            <th>Çalışan Soyadı</th>
+            <th>Hizmet</th>
+            <th>Salon</th>
+            <th>Tarih</th>
+            <th>Saat</th>
+            <th>Toplam Ücret</th>
+            <th>Onay Durumu</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var randevu in Model)
+        {
             <tr>
-                <th>Randevu ID</th>
-                <th>Kullanıcı Adı</th>
-                <th>Kullanıcı Soyadı</th>
-                <th>Çalışan Adı</th>
-                <th>Çalışan Soyadı</th>
-                <th>Hizmet</th>
-                <th>Salon</th>
-                <th>Tarih</th>
-                <th>Saat</th>
-                <th>Toplam Ücret</th>
-                <th>Onay Durumu</th>
-                <th>İşlemler</th>
+                <td>@randevu.RandevularID</td>
+                <td>@(randevu.Kullanicilar?.Ad ?? "Bilinmiyor")</td>
+                <td>@(randevu.Kullanicilar?.Soyad ?? "Bilinmiyor")</td>
+                <td>@(randevu.Calisanlar?.Ad ?? "Bilinmiyor")</td>
+                <td>@(randevu.Calisanlar?.Soyad ?? "Bilinmiyor")</td>
+                <td>@(randevu.Hizmetler?.Ad ?? "Bilinmiyor")</td>
+                <td>@(randevu.Salon?.Ad ?? "Bilinmiyor")</td>
+                <td>@randevu.Tarih.ToString("yyyy-MM-dd")</td>
+                <td>@randevu.Saat</td>
+                <td>@randevu.ToplamUcret.ToString("C")</td>
+                <td>@(randevu.OnayDurumu ? "Onaylandı" : "Onay Bekliyor")</td>
+                <td>
+                    @if (!randevu.OnayDurumu)
+                    {
+                        <form asp-action="Onayla" asp-controller="Admin" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@randevu.RandevularID" />
+                            <button type="submit" class="btn btn-success">Onayla</button>
+                        </form>
+                        <form asp-action="Reddet" asp-controller="Admin" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@randevu.RandevularID" />
+                            <button type="submit" class="btn btn-danger">Reddet</button>
+                        </form>
+                    }
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var randevu in Model)
-            {
-                <tr>
-                    <td>@randevu.RandevularID</td>
-                    <td>@(randevu.Kullanicilar?.Ad ?? "Bilinmiyor")</td>
-                    <td>@(randevu.Kullanicilar?.Soyad ?? "Bilinmiyor")</td>
-                    <td>@(randevu.Calisanlar?.Ad ?? "Bilinmiyor")</td>
-                    <td>@(randevu.Calisanlar?.Soyad ?? "Bilinmiyor")</td>
-                    <td>@(randevu.Hizmetler?.Ad ?? "Bilinmiyor")</td>
-                    <td>@(randevu.Salon?.Ad ?? "Bilinmiyor")</td>
-                    <td>@randevu.Tarih.ToString("yyyy-MM-dd")</td>
-                    <td>@randevu.Saat</td>
-                    <td>@randevu.ToplamUcret.ToString("C")</td>
-                    <td>@(randevu.OnayDurumu ? "Onaylandı" : "Onay Bekliyor")</td>
-                    <td>
-                        @if (!randevu.OnayDurumu)
-                        {
-                            <form asp-action="Onayla" asp-controller="Randevular" method="post" style="display:inline;">
-                                <input type="hidden" name="id" value="@randevu.RandevularID" />
-                                <button type="submit" class="btn btn-success">Onayla</button>
-                            </form>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-   
+        }
+    </tbody>
+</table>

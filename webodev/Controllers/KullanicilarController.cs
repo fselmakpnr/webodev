@@ -13,8 +13,8 @@ namespace webodev.Controllers
         public IActionResult Index()
         {
             //var degerler = c.Kullanicilars.ToList();
-            // return View(degerler);
-            TempData["Message"] = "Yeni kullanıcı başarıyla eklendi!";
+            //return View("Index");
+            // TempData["Message"] = "Yeni kullanıcı başarıyla eklendi!";
             return RedirectToAction("Index", "Home");
         }
 
@@ -27,6 +27,7 @@ namespace webodev.Controllers
         {
             c.Kullanicilars.Add(k);
             c.SaveChanges();
+            TempData["Message"] = "Yeni kullanıcı başarıyla eklendi!";
             return RedirectToAction("Index");
 
         }

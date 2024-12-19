@@ -13,7 +13,6 @@ namespace webodev
         {
             CreateHostBuilder(args).Build().Run();
         }
-
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
@@ -31,6 +30,8 @@ namespace webodev
 
                         services.AddControllersWithViews();  // MVC ile controller ve view ekleniyor
                     });
+
+
 
                     webBuilder.Configure(app =>
                     {
