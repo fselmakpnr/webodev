@@ -41,7 +41,7 @@ body {
     align-items: center;
     height: 100%;
     width: 100%;
-    padding-top: 70px; /* Navbar ile çakışmayı önlemek için üst boşluk */
+    padding-top: 50px; /* Navbar ile çakışmayı önlemek için üst boşluk */
     box-sizing: border-box; /* Padding dahil genişlik ve yükseklik ayarı */
 }
 
