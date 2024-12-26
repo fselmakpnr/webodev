@@ -1,0 +1,28 @@
+﻿@model List<Kullanicilar>
+
+<h1>Kullanıcılar Listesi</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>E-posta</th>
+            <th>Şifre</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var kullanici in Model)
+
+        {
+            <tr>
+                <td>@kullanici.KullanicilarID</td>
+                <td>@kullanici.Ad</td>
+                <td>@kullanici.Soyad</td>
+                <td>@kullanici.Email</td>
+                <td>@kullanici.Sifre</td>
+            </tr>
+        }
+    </tbody>
+</table>

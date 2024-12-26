@@ -63,6 +63,36 @@ namespace webOdev3.Controllers
             }
 
             // Kullanýcýyý veritabanýnda sorgula
+            var bilgiler = c.Kullanicilars
+                .FirstOrDefault(x => x.Email == g.Email);
+
+            if (bilgiler != null && string.Equals(bilgiler.Sifre, g.Sifre, StringComparison.Ordinal))
+            {
+                // Kullanýcýnýn Email ve KullaniciId bilgilerini Session'a kaydediyoruz
+                HttpContext.Session.SetString("Email", bilgiler.Email);
+                HttpContext.Session.SetString("KullaniciId", bilgiler.KullanicilarID.ToString());
+
+                // Giriþ baþarýlý ise, ana sayfaya yönlendir
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Giriþ baþarýsýzsa, hata mesajý göster
+            TempData["ErrorMessage"] = "Geçersiz email veya þifre.";
+            return View();
+        }
+        /*[AllowAnonymous]
+        [HttpPost]
+        public IActionResult GirisYap(Kullanicilar g)
+        {
+            // Admin Giriþi Kontrolü
+            if (g.Email == "admin@sakarya.edu.tr" && g.Sifre == "sau")
+            {
+                // Admin olarak giriþ yapýldý
+                HttpContext.Session.SetString("Email", g.Email);
+                return RedirectToAction("Index", "Admin"); // Admin sayfasýna yönlendirme
+            }
+
+            // Kullanýcýyý veritabanýnda sorgula
             var bilgiler = c.Kullanicilars.FirstOrDefault(x => x.Email == g.Email && x.Sifre == g.Sifre);
 
             if (bilgiler != null)
@@ -78,7 +108,7 @@ namespace webOdev3.Controllers
             // Giriþ baþarýsýzsa, hata mesajý göster
             TempData["ErrorMessage"] = "Geçersiz email veya þifre.";
             return View();
-        }
+        }*/
 
 
         [HttpGet]

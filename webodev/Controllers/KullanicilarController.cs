@@ -25,6 +25,14 @@ namespace webodev.Controllers
 
         public IActionResult KullaniciKaydet(Kullanicilar k)
         {
+            var mevcutKullanici = c.Kullanicilars.FirstOrDefault(x => x.Email == k.Email);
+            if (mevcutKullanici != null)
+            {
+                // Hata mesajı ile kullanıcı ekleme sayfasına geri dön
+                ModelState.AddModelError("Email", "Bu e-posta adresiyle bir kullanıcı zaten mevcut.");
+                return View("KullaniciEkle", k);
+            }
+
             c.Kullanicilars.Add(k);
             c.SaveChanges();
             TempData["Message"] = "Yeni kullanıcı başarıyla eklendi!";

@@ -17,6 +17,7 @@ namespace webodev.Models
         [Display(Name = "E-mail")]
         [Required(ErrorMessage = "Email adresi gereklidir.")]
         [EmailAddress(ErrorMessage = "Geçerli bir email adresi giriniz.")]
+        
         public string Email { get; set; }
 
         [Display(Name = "Şifre")]

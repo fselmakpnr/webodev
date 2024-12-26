@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using webodev.Models;
 
 namespace webodev.Controllers
@@ -82,6 +83,29 @@ namespace webodev.Controllers
 
             // Aynı sayfaya yönlendir
             return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Kullanicilar()
+        {
+            List<Kullanicilar> kullanicilar = new List<Kullanicilar>();
+
+            using (HttpClient client = new HttpClient())
+            {
+                // API'ye GET isteği yap
+                var response = await client.GetAsync("https://localhost:7086/api/KullaniciApi/");
+
+                // API isteği başarılı mı kontrol et
+                if (response.IsSuccessStatusCode)
+                {
+                    // Yanıtı JSON string olarak al
+                    string jsonData = await response.Content.ReadAsStringAsync();
+
+                    // JSON'u Kullanicilar modeline dönüştür
+                    kullanicilar = JsonConvert.DeserializeObject<List<Kullanicilar>>(jsonData);
+                }
+            }
+
+            // Kullanıcılar listesini View'e gönder
+            return View(kullanicilar);
         }
 
         [HttpGet]
