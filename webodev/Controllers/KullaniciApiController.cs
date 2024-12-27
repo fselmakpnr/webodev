@@ -10,7 +10,7 @@ namespace webodev.Controllers
     public class KullaniciApiController : ControllerBase
     {
         Context k = new Context();
-        // GET: api/<KullaniciApiController>
+       
         [HttpGet]
         public List<Kullanicilar> Get()
         {
@@ -18,7 +18,7 @@ namespace webodev.Controllers
             return kullanici;
         }
 
-        // GET api/<KullaniciApiController>/5
+       
         [HttpGet("{id}")]
         public ActionResult<Kullanicilar> Get(int id)
         {
@@ -30,19 +30,19 @@ namespace webodev.Controllers
             return kullanici;
 
         }
-        // POST api/<KullaniciApiController>
+       
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<KullaniciApiController>/5
+        
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<KullaniciApiController>/5
+       
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

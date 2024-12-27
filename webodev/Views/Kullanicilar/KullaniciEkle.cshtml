@@ -15,28 +15,28 @@
                 </div>
                 <div class="card-body">
                     <form asp-controller="Kullanicilar" asp-action="KullaniciKaydet" method="post">
-                        <!-- Kullanıcı Adı -->
+                       
                         <div class="form-group mb-3">
                             <label asp-for="Ad" class="form-label"></label>
                             <input asp-for="Ad" class="form-control" placeholder="Adınızı girin" required />
                             <span asp-validation-for="Ad" class="text-danger"></span>
                         </div>
 
-                        <!-- Soyadı -->
+                        
                         <div class="form-group mb-3">
                             <label asp-for="Soyad" class="form-label"></label>
                             <input asp-for="Soyad" class="form-control" placeholder="Soyadınızı girin" required />
                             <span asp-validation-for="Soyad" class="text-danger"></span>
                         </div>
 
-                        <!-- Email -->
+                        
                         <div class="form-group mb-3">
                             <label asp-for="Email" class="form-label"></label>
                             <input asp-for="Email" class="form-control" placeholder="Email adresinizi girin" required />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
-                        <!-- Şifre -->
+                        
                         <div class="form-group mb-3">
                             <label asp-for="Sifre" class="form-label"></label>
                             <input asp-for="Sifre" type="password" class="form-control" placeholder="Şifrenizi girin" required />
@@ -45,7 +45,7 @@
 
                        
 
-                        <!-- Kayıt Ol Butonu -->
+                        
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary">Kayıt Ol</button>
                         </div>

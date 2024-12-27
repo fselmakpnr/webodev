@@ -33,13 +33,13 @@ namespace webOdev3.Controllers
 
         public IActionResult RandevuAl()
         {
-            // Kullanýcý giriþ yapmamýþsa, giriþ yap sayfasýna yönlendir
+            
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("Email")))
             {
                 return RedirectToAction("GirisYap", "Home");
             }
 
-            // Kullanýcý giriþ yaptýysa, RandevuController'a yönlendir
+            
             return RedirectToAction("Index", "Randevu");
         }
 
@@ -55,66 +55,37 @@ namespace webOdev3.Controllers
         public IActionResult GirisYap(Kullanicilar g)
         {
             // Admin Giriþi Kontrolü
-            if (g.Email == "admin@sakarya.edu.tr" && g.Sifre == "sau")
+            if (g.Email == "B221210087@sakarya.edu.tr" && g.Sifre == "sau")
             {
                 // Admin olarak giriþ yapýldý
                 HttpContext.Session.SetString("Email", g.Email);
                 return RedirectToAction("Index", "Admin"); // Admin sayfasýna yönlendirme
             }
 
-            // Kullanýcýyý veritabanýnda sorgula
+            
             var bilgiler = c.Kullanicilars
                 .FirstOrDefault(x => x.Email == g.Email);
 
             if (bilgiler != null && string.Equals(bilgiler.Sifre, g.Sifre, StringComparison.Ordinal))
             {
-                // Kullanýcýnýn Email ve KullaniciId bilgilerini Session'a kaydediyoruz
+                
                 HttpContext.Session.SetString("Email", bilgiler.Email);
                 HttpContext.Session.SetString("KullaniciId", bilgiler.KullanicilarID.ToString());
 
-                // Giriþ baþarýlý ise, ana sayfaya yönlendir
+               
                 return RedirectToAction("Index", "Home");
             }
 
-            // Giriþ baþarýsýzsa, hata mesajý göster
+            
             TempData["ErrorMessage"] = "Geçersiz email veya þifre.";
             return View();
         }
-        /*[AllowAnonymous]
-        [HttpPost]
-        public IActionResult GirisYap(Kullanicilar g)
-        {
-            // Admin Giriþi Kontrolü
-            if (g.Email == "admin@sakarya.edu.tr" && g.Sifre == "sau")
-            {
-                // Admin olarak giriþ yapýldý
-                HttpContext.Session.SetString("Email", g.Email);
-                return RedirectToAction("Index", "Admin"); // Admin sayfasýna yönlendirme
-            }
-
-            // Kullanýcýyý veritabanýnda sorgula
-            var bilgiler = c.Kullanicilars.FirstOrDefault(x => x.Email == g.Email && x.Sifre == g.Sifre);
-
-            if (bilgiler != null)
-            {
-                // Kullanýcýnýn Email ve KullaniciId bilgilerini Session'a kaydediyoruz
-                HttpContext.Session.SetString("Email", bilgiler.Email);
-                HttpContext.Session.SetString("KullaniciId", bilgiler.KullanicilarID.ToString());
-
-                // Giriþ baþarýlý ise, ana sayfaya yönlendir
-                return RedirectToAction("Index", "Home");
-            }
-
-            // Giriþ baþarýsýzsa, hata mesajý göster
-            TempData["ErrorMessage"] = "Geçersiz email veya þifre.";
-            return View();
-        }*/
-
+        
 
         [HttpGet]
         public IActionResult SifremiUnuttum()
         {
-            // Boþ bir model ile sayfayý döndür
+            
             return View(new SifremiUnuttumViewModel());
         }
 
@@ -123,7 +94,7 @@ namespace webOdev3.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Þifre sýfýrlama iþlemleri
+                
                 var user = c.Kullanicilars.FirstOrDefault(x => x.Email == model.Email);
                 if (user != null)
                 {
@@ -136,6 +107,14 @@ namespace webOdev3.Controllers
             }
 
             return View(model);
+        }
+        public IActionResult CikisYap()
+        {
+            // Kullanýcýnýn oturum bilgilerini temizliyoruz
+            HttpContext.Session.Clear();
+
+            // Ana sayfaya yönlendiriyoruz
+            return RedirectToAction("Index", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

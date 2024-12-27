@@ -12,9 +12,7 @@ namespace webodev.Controllers
 
         public IActionResult Index()
         {
-            //var degerler = c.Kullanicilars.ToList();
-            //return View("Index");
-            // TempData["Message"] = "Yeni kullanıcı başarıyla eklendi!";
+           
             return RedirectToAction("Index", "Home");
         }
 
@@ -28,7 +26,7 @@ namespace webodev.Controllers
             var mevcutKullanici = c.Kullanicilars.FirstOrDefault(x => x.Email == k.Email);
             if (mevcutKullanici != null)
             {
-                // Hata mesajı ile kullanıcı ekleme sayfasına geri dön
+               
                 ModelState.AddModelError("Email", "Bu e-posta adresiyle bir kullanıcı zaten mevcut.");
                 return View("KullaniciEkle", k);
             }

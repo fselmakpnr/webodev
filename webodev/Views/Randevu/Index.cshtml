@@ -25,7 +25,7 @@
     </div>
 }
 <form asp-controller="Randevu" asp-action="RandevuEkle" method="post">
-    <!-- Çalışan Seçimi -->
+   
     <div class="form-group">
         <label for="calisanId">Çalışan Seçin:</label>
         <select class="form-control" id="calisanId" name="calisanAdi" required>
@@ -39,7 +39,7 @@
         </select>
     </div>
 
-    <!-- Hizmet Seçimi -->
+    
     <div class="form-group">
         <label for="hizmetId">Hizmet Seçin:</label>
         <select class="form-control" id="hizmetId" name="hizmetAd" required>
@@ -47,13 +47,13 @@
         </select>
     </div>
 
-    <!-- Ücret Görüntüleme -->
+    
     <div class="form-group">
         <label for="ucret">Ücret:</label>
         <input type="text" class="form-control" id="ucret" name="hizmetUcret" readonly />
     </div>
 
-    <!-- Tarih ve Saat Seçimi -->
+    
     <div class="form-group">
         <label for="tarih">Tarih Seçin:</label>
         <input type="date" class="form-control" id="tarih" name="tarih" required />
@@ -74,23 +74,23 @@
 </form>
 
 <script>
-    // ViewBag'den hizmet verilerini JSON olarak alıyoruz
+    
     var calisanHizmetler = @Html.Raw(ViewBag.CalisanHizmetler);
 
-    // Çalışan seçildiğinde hizmetler dinamik olarak güncellenecek
+    
     document.getElementById('calisanId').addEventListener('change', function () {
-        var selectedEmployee = this.value.trim(); // Seçilen çalışan adı ve soyadı
+        var selectedEmployee = this.value.trim(); 
 
-        // Hizmet seçeneklerini sıfırlıyoruz
+        
         var hizmetSelect = document.getElementById('hizmetId');
         hizmetSelect.innerHTML = '<option value="">Hizmet Seçin</option>';
 
-        // Seçilen çalışanın hizmetlerini buluyoruz
+        
         var selectedCalisan = calisanHizmetler.find(function (calisan) {
             return (calisan.CalisanAdi + " " + calisan.CalisanSoyadi).trim() === selectedEmployee;
         });
 
-        // Eğer çalışanın hizmetleri varsa, seçeneklere ekliyoruz
+        
         if (selectedCalisan) {
             selectedCalisan.HizmetDetaylari.forEach(function (hizmet) {
                 var option = document.createElement('option');
@@ -99,15 +99,15 @@
                 hizmetSelect.appendChild(option);
             });
         }
-        // Hizmet seçimi yapıldığında ücret güncellenir
+        
         document.getElementById('hizmetId').addEventListener('change', function () {
-            var selectedHizmet = this.options[this.selectedIndex]; // Seçilen hizmet
+            var selectedHizmet = this.options[this.selectedIndex]; 
             if (selectedHizmet && selectedHizmet.text.includes('-')) {
-                // Hizmet detaylarını parçalayarak ücreti ayıklıyoruz
-                var hizmetUcret = selectedHizmet.text.split('-')[2].replace('₺', '').trim(); // Ücreti temizle
-                document.getElementById('ucret').value = hizmetUcret; // Ücreti input alanına yaz
+               
+                var hizmetUcret = selectedHizmet.text.split('-')[2].replace('₺', '').trim(); 
+                document.getElementById('ucret').value = hizmetUcret; 
             } else {
-                document.getElementById('ucret').value = ''; // Geçersiz seçimde temizle
+                document.getElementById('ucret').value = ''; 
             }
         });
 

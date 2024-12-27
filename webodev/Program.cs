@@ -20,34 +20,34 @@ namespace webodev
                     webBuilder.ConfigureServices(services =>
                     {
                         // Session için gerekli yapýlandýrmalar
-                        services.AddDistributedMemoryCache();  // Bellek içi cache kullanýlacak
+                        services.AddDistributedMemoryCache();  
                         services.AddSession(options =>
                         {
-                            options.IdleTimeout = TimeSpan.FromMinutes(30); // Session süresi
-                            options.Cookie.HttpOnly = true;  // Cookie'yi sadece HTTP istekleri için eriþilebilir yap
-                            options.Cookie.IsEssential = true;  // Cookie'nin temel olmasý gerektiðini belirt
+                            options.IdleTimeout = TimeSpan.FromMinutes(30); 
+                            options.Cookie.HttpOnly = true;  
+                            options.Cookie.IsEssential = true;  
                         });
 
-                        services.AddControllersWithViews();  // MVC ile controller ve view ekleniyor
+                        services.AddControllersWithViews();  
                     });
 
 
 
                     webBuilder.Configure(app =>
                     {
-                        // Statik dosyalarýn sunulmasý (CSS, JS, vb.)
+                        
                         app.UseStaticFiles();
 
-                        // Session middleware'ini ekleyin
+                       
                         app.UseSession();
 
-                        // Routing
+                       
                         app.UseRouting();
 
-                        // Authorization middleware'ini ekleyin
+                       
                         app.UseAuthorization();
 
-                        // Endpoint yapýlandýrmasý
+                        
                         app.UseEndpoints(endpoints =>
                         {
                             endpoints.MapControllerRoute(

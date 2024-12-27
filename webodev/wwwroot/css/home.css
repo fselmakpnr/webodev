@@ -1,31 +1,30 @@
-﻿/* Genel Stil */
+﻿
 body {
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
-    /* Arka plan resmi */
     background-image: url('/images/kuafor.png');
-    background-size: cover; /* Resmi ekrana tam sığdır */
+    background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
     background-color: #f4f6f9;
     height: 100vh;
     display: flex;
-    justify-content: center; /* İçeriği yatayda ortala */
-    align-items: center; /* İçeriği dikeyde ortala */
+    justify-content: center; 
+    align-items: center; 
 }
 
-/* Ana container */
+
 .container {
-    width: 90%; /* Kart genişliği ekranın %90'ını kaplasın */
-    max-width: 1200px; /* Maksimum genişlik 1200px */
+    width: 90%; 
+    max-width: 1200px; 
     padding: 20px;
 }
 
-/* Kart Stili */
+
 .card {
     background-color: #ecc889;
-    width: 100%; /* Kart genişliği container'a uyumlu */
+    width: 100%; 
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
@@ -33,23 +32,22 @@ body {
     
 }
 
-/* Kart başlığı */
+
 .card-header {
-    font-size: 10rem; /* Yazı boyutunu büyütmek için değeri artırdım */
+    font-size: 10rem; 
     font-weight: bolder;
     color: #c19dcc;
     margin-bottom: 1.5rem;
     background-color: #ecc889;
 }
 
-/* Kart içeriği */
+
 .card-body p {
     font-size: 1.2rem;
     color: #fff;
     margin-bottom: 2rem;
 }
 
-/* Buton */
 .btn-primary {
     display: inline-block;
     background-color: #808080;
@@ -68,7 +66,6 @@ body {
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
-/* Responsive (Mobil Ekranlar için) */
 @media (max-width: 768px) {
     .container {
         width: 95%;

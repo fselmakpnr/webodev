@@ -36,7 +36,7 @@ namespace webOdev3.Controllers
                 return View();
             }
 
-            // Modeli JSON olarak View'a gönderiyoruz
+            
             ViewBag.CalisanHizmetler = JsonConvert.SerializeObject(calisanHizmetler);
 
             return View(calisanHizmetler);
@@ -82,7 +82,7 @@ namespace webOdev3.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Çalışan ve hizmet bilgilerini almak
+            
             var calisan = _context.Calisanlars.FirstOrDefault(c => c.Ad + " " + c.Soyad == calisanAdi);
             var hizmet = _context.Hizmetlers.FirstOrDefault(h => h.Ad == hizmetAd);
 
@@ -92,13 +92,13 @@ namespace webOdev3.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Çalışan için seçilen tarih ve saat aralığında mevcut bir randevu olup olmadığını kontrol et
+            
             var hizmetSuresi = TimeSpan.FromMinutes(hizmet.Sure);
             var randevuBitisSaati = saatDilimi + hizmetSuresi;
 
             var mevcutRandevular = _context.Randevulars
                 .Where(r => r.CalisanlarID == calisan.CalisanlarID && r.Tarih.Date == randevuTarihi.Date)
-                .AsEnumerable() // LINQ-to-Objects'e geçiş
+                .AsEnumerable() 
                 .Where(r => r.Saat < randevuBitisSaati && r.Saat + TimeSpan.FromMinutes(hizmet.Sure) > saatDilimi)
                 .ToList();
 

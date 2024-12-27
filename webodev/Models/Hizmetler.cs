@@ -8,7 +8,7 @@ namespace webodev.Models
         [Key]
         public int HizmetlerID { get; set; }
         public string Ad { get; set; }
-        public int Sure { get; set; }  // Hizmet süresi dakika olarak
+        public int Sure { get; set; }  
         public float Ucret { get; set; }
         public int SalonID { get; set; }
 

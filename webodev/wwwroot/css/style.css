@@ -1,23 +1,21 @@
-﻿/* Genel Stil */
+﻿
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
     background-color: #dddddd !important;
-    /* Koyu gri arka plan rengi */
     height: 100vh;
 }
 
-/* Navbar Stili */
 .navbar {
-    position: fixed; /* Sabit pozisyon */
+    position: fixed; 
     top: 0;
-    width: 100%; /* Tüm genişliği kapla */
-    background-color: #333; /* Koyu arka plan */
+    width: 100%; 
+    background-color: #333; 
     color: white;
     padding: 15px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 100; /* Diğer içeriklerin üstünde tut */
+    z-index: 100; 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,15 +32,15 @@ body {
             text-decoration: underline;
         }
 
-/* Login Container */
+
 .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
-    padding-top: 50px; /* Navbar ile çakışmayı önlemek için üst boşluk */
-    box-sizing: border-box; /* Padding dahil genişlik ve yükseklik ayarı */
+    padding-top: 50px; 
+    box-sizing: border-box;
 }
 
 .login-card {

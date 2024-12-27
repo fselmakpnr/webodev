@@ -9,7 +9,7 @@
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 <div class="container mt-4">
-    <!-- Slider (Carousel) -->
+   
     <div id="carouselExampleIndicators" class="carousel slide">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -34,14 +34,14 @@
     </div>
 
 
-    <!-- Login Form Container -->
+    
     <div class="login-container">
         <div class="login-card">
             <h2 class="welcome-text">Serap Kuaför</h2>
             <div class="logo">
                 <span class="logo-icon">KS</span>
             </div>
-            <!-- TempData Error Message -->
+           
             @if (TempData["ErrorMessage"] != null)
             {
                 <div class="alert alert-danger mt-3" role="alert">
@@ -49,30 +49,30 @@
                 </div>
             }
             <form asp-controller="Home" asp-action="GirisYap" method="post">
-                <!-- Email -->
+                
                 <div class="form-group">
                     <input asp-for="Email" type="email" placeholder="Email" class="input-field" required />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
 
-                <!-- Password -->
+             
                 <div class="form-group">
                     <input asp-for="Sifre" type="password" placeholder="Şifre" class="input-field" required />
                     <span asp-validation-for="Sifre" class="text-danger"></span>
                 </div>
 
-                <!-- Şifremi Unuttum -->
+                
                 <div class="text-end mb-3">
                     <a asp-controller="Home" asp-action="SifremiUnuttum" class="text-primary">Şifremi Unuttum</a>
                 </div>
 
-                <!-- Submit Button -->
+                
                 <div class="form-group">
                     <button type="submit" class="login-btn">Giriş Yap</button>
                 </div>
             </form>
 
-            <!-- Sign Up Link -->
+            
             <div class="signup-text">
                 <p>Hesabınız yok mu? <a asp-controller="Kullanicilar" asp-action="KullaniciEkle">Kayıt Ol</a></p>
             </div>
